@@ -32,17 +32,39 @@ public class LogincampusvirtualerrorTest {
   JavascriptExecutor js;
   @Before
   public void setUp() {
-	// Uncomment drivers path to run in Eclipse (next two lines)
-	System.setProperty("webdriver.gecko.driver",  "drivers/geckodriver.exe");
-	FirefoxOptions firefoxOptions = new FirefoxOptions();
-	firefoxOptions.setHeadless(true);
-	driver = new FirefoxDriver(firefoxOptions);
+	// Browser selector 
+	int browser = 0; // 0: firefox, 1: chrome,...
+	Boolean headless = false;
 	
-	// System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
-	// ChromeOptions chromeOptions = new ChromeOptions();
-	// chromeOptions.setHeadless(true);
-	// chromeOptions.addArguments("window-size=1920,1080");
-	// driver = new ChromeDriver(chromeOptions);
+	switch (browser) {
+	case 0:  // firefox
+		// Firefox 
+		// Descargar geckodriver de https://github.com/mozilla/geckodriver/releases
+		// Descomprimir el archivo geckodriver.exe en la carpeta drivers
+
+		System.setProperty("webdriver.gecko.driver",  "drivers/geckodriver.exe");
+		FirefoxOptions firefoxOptions = new FirefoxOptions();
+		if (headless) firefoxOptions.setHeadless(true);
+		driver = new FirefoxDriver(firefoxOptions);
+		
+		break;
+	case 1: // chrome
+		// Chrome
+		// Descargar Chromedriver de https://chromedriver.chromium.org/downloads
+		// Descomprimir el archivo chromedriver.exe en la carpeta drivers
+
+		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
+		ChromeOptions chromeOptions = new ChromeOptions();
+		if (headless) chromeOptions.setHeadless(true);
+		chromeOptions.addArguments("window-size=1920,1080");
+		driver = new ChromeDriver(chromeOptions);
+		
+		break;
+
+	default:
+		fail("Please select a browsereeer....");
+		break;
+	}
 	
     js = (JavascriptExecutor) driver;
     vars = new HashMap<String, Object>();
@@ -63,7 +85,11 @@ public class LogincampusvirtualerrorTest {
     driver.findElement(By.linkText("Campus on-line")).click();
     // 4 | click | linkText=Acceso a Campus Virtual | 
     driver.findElement(By.linkText("Acceso a Campus Virtual")).click();
-    // 5 | click | linkText=Login | 
+    // 5 | click | linkText=Login |
+    {
+    	WebDriverWait wait = new WebDriverWait(driver, 20);
+    	wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Login")));
+    }
     driver.findElement(By.linkText("Login")).click();
     // 6 | click | name=ssousername | 
     driver.findElement(By.name("ssousername")).click();
