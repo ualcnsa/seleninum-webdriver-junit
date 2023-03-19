@@ -31,9 +31,9 @@ public class LogincampusvirtualerrorTest {
   private Map<String, Object> vars;
   JavascriptExecutor js;
   @Before
-  public void setUp() {
+  public void setUp() throws MalformedURLException{
 	// Browser selector 
-	int browser = 0; // 0: firefox, 1: chrome,...
+	int browser = 2; // 0: firefox, 1: chrome,...
 	Boolean headless = false;
 	
 	switch (browser) {
@@ -60,6 +60,14 @@ public class LogincampusvirtualerrorTest {
 		driver = new ChromeDriver(chromeOptions);
 		
 		break;
+
+  case 2: // remote
+    // Remote
+		FirefoxOptions firefoxOptions2 = new FirefoxOptions();
+		if (headless) firefoxOptions2.setHeadless(true);
+    driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), firefoxOptions2);
+
+    break;
 
 	default:
 		fail("Please select a browsereeer....");
