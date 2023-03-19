@@ -82,9 +82,9 @@ public class LogincampusvirtualerrorTest {
     // 2 | setWindowSize | 842x633 | 
     driver.manage().window().setSize(new Dimension(842, 633));
     // 3 | click | linkText=Campus on-line | 
-    driver.findElement(By.linkText("Campus on-line")).click();
+    driver.findElement(By.linkText("Campus online")).click();
     // 4 | click | linkText=Acceso a Campus Virtual | 
-    driver.findElement(By.linkText("Acceso a Campus Virtual")).click();
+    driver.findElement(By.linkText("Acceso a campus virtual")).click();
     // 5 | click | linkText=Login |
     {
     	WebDriverWait wait = new WebDriverWait(driver, 20);
